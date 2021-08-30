@@ -6,38 +6,57 @@
 //   console.log(mashPotatoes[i])
 // }
 
-// Iteration 1 using callbacks
+//Iteration 1 using callbacks
 addFood(steak[0], '#steak', () => {
-  // ... your code here
   addFood(steak[1], '#steak', () => {
-
-  })
-});
-
-
-
-// Iteration 2 using `.then()`
-addFood(mashPotatoes[0], '#mashPotatoes').then(() => {
-  // ... your code here
-  addFood(mashPotatoes[1], '#mashPotatoes').then(() => {
-    addFood(mashPotatoes[2], '#mashPotatoes').then(() => {
-      addFood(mashPotatoes[3], '#mashPotatoes').then(() => {
-        addFood(mashPotatoes[4], '#mashPotatoes')
+    addFood(steak[2], '#steak', () => {
+      addFood(steak[3], '#steak', () => {
+        addFood(steak[4], '#steak', () => {
+          addFood(steak[5], '#steak', () => {
+            addFood(steak[6], '#steak', () => {
+              addFood(steak[7], '#steak', () => {
+                // console.log('list is done');
+                document.querySelector('#table').innerHTML += `<img src="public/images/steak.jpg"/>`
+              })
+            })
+          })
+        })
       })
     })
   })
 });
 
+
+
+//Iteration 2 using `.then()`
+addFood(mashPotatoes[0], '#mashPotatoes').then(() => {
+  addFood(mashPotatoes[1], '#mashPotatoes').then(() => {
+    addFood(mashPotatoes[2], '#mashPotatoes').then(() => {
+      addFood(mashPotatoes[3], '#mashPotatoes').then(() => {
+        addFood(mashPotatoes[4], '#mashPotatoes').then(() => {
+          // console.log('potatoe list finished')
+          document.querySelector('#table').innerHTML += `<img src="public/images/mashPotatoes.jpg"/>`
+        })
+      })
+    })
+  });
+});
+
 // Iteration 3 using async/await
 
-  async function makeFood(step) {
-    // ... your code here
-    try {
-      for (let step of brusselSprouts)
-      await addFood(brusselSprouts[eachStep], '#brusselSprouts')
-      eachStep = step;
-      } finally {
-    console.log('this excute always');
-    }
+async function makeFood(steps, id) {
+  for (let step of steps) {
+    await addFood(step, id)
   }
-  makeFood(eachStep);
+  // console.log('brussel sprouts done');
+  document.querySelector('#table').innerHTML += `<img src="public/images/${id.slice(1)}.jpg"/>`
+}
+
+Promise.all([
+  makeFood(steak, '#steak'),
+  makeFood(brusselSprouts, '#brusselSprouts'),
+  makeFood(mashPotatoes, '#mashPotatoes')
+]).then(() => {
+  // console.log('everything finished');
+  document.querySelector('body').innerHTML += '<button>Dinner is serverd</button>'
+})
